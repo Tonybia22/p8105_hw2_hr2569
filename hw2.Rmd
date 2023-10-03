@@ -2,7 +2,7 @@
 title: "HW 2"
 author: "Hongzhu Ren"
 date: "2023-10-01"
-output: html_document
+output: github_document
 ---
 ```{r setup, include=FALSE}
 library(tidyverse)
