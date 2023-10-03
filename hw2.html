@@ -359,6 +359,8 @@ display: none;
 
 <div id="problem-1" class="section level1">
 <h1>Problem 1</h1>
+<div id="import-and-clean-pol_month-data" class="section level2">
+<h2>Import and clean pol_month data</h2>
 <pre><code>## # A tibble: 822 × 9
 ##     year month gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem president
 ##    &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
@@ -379,6 +381,9 @@ government agencies ranging from 1947 to 2015. The prefix
 governors, the number of senators,the number of representatives. And the
 suffix <em>gop</em> and <em>dem</em> referred to the two parties of
 USA.</p>
+</div>
+<div id="import-and-clean-snp-data" class="section level2">
+<h2>Import and clean snp data</h2>
 <pre><code>## # A tibble: 787 × 3
 ##     year month close
 ##    &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;
@@ -395,7 +400,10 @@ USA.</p>
 ## # ℹ 777 more rows</code></pre>
 <p><strong>snp</strong> data reflected the stock performance . The
 <em>close</em> variable referred to the closing values of the S&amp;P
-stock index on the associated date ranging from 1950 to NA</p>
+stock index on the associated date ranging from 1950 to 2015</p>
+</div>
+<div id="import-and-clean-unemployment-data" class="section level2">
+<h2>Import and clean unemployment data</h2>
 <pre><code>## # A tibble: 816 × 3
 ##     year month unemployment
 ##    &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
@@ -411,7 +419,7 @@ stock index on the associated date ranging from 1950 to NA</p>
 ## 10  1948 Oct            3.7
 ## # ℹ 806 more rows</code></pre>
 <p><strong>unemployment</strong> data described the unemployment rate
-over time.</p>
+over time randing from 1948 to 2015.</p>
 <pre><code>## # A tibble: 828 × 11
 ##     year month gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem president close
 ##    &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
@@ -431,9 +439,11 @@ over time.</p>
 government composition in association with stock performance and
 unemployment situation ranging from 1947 to 2015.</p>
 </div>
+</div>
 <div id="problem-2" class="section level1">
 <h1>Problem 2</h1>
-<p>import and clean Mr.Trash Wheel data</p>
+<div id="import-and-clean-mr.trash-wheel-data" class="section level2">
+<h2>Import and clean Mr.Trash Wheel data</h2>
 <pre><code>## # A tibble: 547 × 14
 ##    dumpster month year  date                weight_tons volume_cubic_yards
 ##       &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dttm&gt;                    &lt;dbl&gt;              &lt;dbl&gt;
@@ -451,18 +461,163 @@ unemployment situation ranging from 1947 to 2015.</p>
 ## # ℹ 8 more variables: plastic_bottles &lt;dbl&gt;, polystyrene &lt;dbl&gt;,
 ## #   cigarette_butts &lt;dbl&gt;, glass_bottles &lt;dbl&gt;, grocery_bags &lt;dbl&gt;,
 ## #   chip_bags &lt;dbl&gt;, sports_balls &lt;dbl&gt;, homes_powered &lt;dbl&gt;</code></pre>
-<p>import and clean Professor and Gwynnda data</p>
-<p>Add tag to each dataset</p>
-<pre class="r"><code>trash_comb &lt;- mutate(trash_comb,year = as.numeric(year))
-trash_final &lt;- bind_rows(trash_comb,professor_comb,gwynnda_comb)</code></pre>
-<p>The final combined data is a 16 and 747, the <em>weight_tons</em>
-variable refers to the total weight the trash wheel carried each day
-with the unit ton. <em>home_powered</em> estimate the number of houses
-which can be supplied by energy generated from trash wheel.</p>
+</div>
+<div id="import-and-clean-professor-data" class="section level2">
+<h2>Import and clean Professor data</h2>
+<pre><code>## # A tibble: 94 × 13
+##    dumpster month     year date                weight_tons volume_cubic_yards
+##       &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dttm&gt;                    &lt;dbl&gt;              &lt;dbl&gt;
+##  1        1 January   2017 2017-01-02 00:00:00        1.79                 15
+##  2        2 January   2017 2017-01-30 00:00:00        1.58                 15
+##  3        3 February  2017 2017-02-26 00:00:00        2.32                 18
+##  4        4 February  2017 2017-02-26 00:00:00        3.72                 15
+##  5        5 February  2017 2017-02-28 00:00:00        1.45                 15
+##  6        6 March     2017 2017-03-30 00:00:00        1.71                 15
+##  7        7 April     2017 2017-04-01 00:00:00        1.82                 15
+##  8        8 April     2017 2017-04-20 00:00:00        2.37                 15
+##  9        9 May       2017 2017-05-10 00:00:00        2.64                 15
+## 10       10 May       2017 2017-05-26 00:00:00        2.78                 15
+## # ℹ 84 more rows
+## # ℹ 7 more variables: plastic_bottles &lt;dbl&gt;, polystyrene &lt;dbl&gt;,
+## #   cigarette_butts &lt;dbl&gt;, glass_bottles &lt;dbl&gt;, grocery_bags &lt;dbl&gt;,
+## #   chip_bags &lt;dbl&gt;, homes_powered &lt;dbl&gt;</code></pre>
+</div>
+<div id="import-and-clean-gwynnda-data" class="section level2">
+<h2>Import and clean Gwynnda data</h2>
+<pre><code>## # A tibble: 106 × 11
+##    dumpster month   year date                weight_tons volume_cubic_yards
+##       &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dttm&gt;                    &lt;dbl&gt;              &lt;dbl&gt;
+##  1        1 July    2021 2021-07-03 00:00:00        0.93                 15
+##  2        2 July    2021 2021-07-07 00:00:00        2.26                 15
+##  3        3 July    2021 2021-07-07 00:00:00        1.62                 15
+##  4        4 July    2021 2021-07-16 00:00:00        1.76                 15
+##  5        5 July    2021 2021-07-30 00:00:00        1.53                 15
+##  6        6 August  2021 2021-08-11 00:00:00        2.06                 15
+##  7        7 August  2021 2021-08-14 00:00:00        1.9                  15
+##  8        8 August  2021 2021-08-16 00:00:00        2.16                 15
+##  9        9 August  2021 2021-08-16 00:00:00        2.6                  15
+## 10       10 August  2021 2021-08-17 00:00:00        3.21                 15
+## # ℹ 96 more rows
+## # ℹ 5 more variables: plastic_bottles &lt;dbl&gt;, polystyrene &lt;dbl&gt;,
+## #   cigarette_butts &lt;dbl&gt;, plastic_bags &lt;dbl&gt;, homes_powered &lt;dbl&gt;</code></pre>
+</div>
+<div id="add-tag-to-each-dataset" class="section level2">
+<h2>Add tag to each dataset</h2>
+<p>Add “Mr.trash”,“professor”,“gwynnda” to each dataset.</p>
+</div>
+<div id="combine-three-datasets-and-form-the-trash_final-dataset" class="section level2">
+<h2>Combine three datasets and form the trash_final dataset</h2>
+<pre><code>## # A tibble: 747 × 16
+##    tag   dumpster month  year date                weight_tons volume_cubic_yards
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dttm&gt;                    &lt;dbl&gt;              &lt;dbl&gt;
+##  1 Mr.t…        1 May    2014 2014-05-16 00:00:00        4.31                 18
+##  2 Mr.t…        2 May    2014 2014-05-16 00:00:00        2.74                 13
+##  3 Mr.t…        3 May    2014 2014-05-16 00:00:00        3.45                 15
+##  4 Mr.t…        4 May    2014 2014-05-17 00:00:00        3.1                  15
+##  5 Mr.t…        5 May    2014 2014-05-17 00:00:00        4.06                 18
+##  6 Mr.t…        6 May    2014 2014-05-20 00:00:00        2.71                 13
+##  7 Mr.t…        7 May    2014 2014-05-21 00:00:00        1.91                  8
+##  8 Mr.t…        8 May    2014 2014-05-28 00:00:00        3.7                  16
+##  9 Mr.t…        9 June   2014 2014-06-05 00:00:00        2.52                 14
+## 10 Mr.t…       10 June   2014 2014-06-11 00:00:00        3.76                 18
+## # ℹ 737 more rows
+## # ℹ 9 more variables: plastic_bottles &lt;dbl&gt;, polystyrene &lt;dbl&gt;,
+## #   cigarette_butts &lt;dbl&gt;, glass_bottles &lt;dbl&gt;, grocery_bags &lt;dbl&gt;,
+## #   chip_bags &lt;dbl&gt;, sports_balls &lt;dbl&gt;, homes_powered &lt;dbl&gt;,
+## #   plastic_bags &lt;dbl&gt;</code></pre>
+<p>The final combined data is a 16 and 747 dataset, the
+<em>weight_tons</em> variable refers to the total weight the trash wheel
+carried each day with the unit ton. <em>home_powered</em> estimate the
+number of houses which can be supplied by energy generated from trash
+wheel.</p>
 <p>As for the available data, the total weight of trash collected by
 Professor Trash Wheel was 190.12 tons; the total cigarette butts
 collected by Gwynnda in July of 2021 was 1.63^{4}.</p>
-<p>#problem 3</p>
+</div>
+</div>
+<div id="problem-3" class="section level1">
+<h1>Problem 3</h1>
+<div id="import-and-clean-baseline-data" class="section level2">
+<h2>Import and clean baseline data</h2>
+<pre><code>## Rows: 483 Columns: 6
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): Age at onset
+## dbl (5): ID, Current Age, Sex, Education, apoe4
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## # A tibble: 479 × 6
+##       id current_age sex    education apoe4         age_at_onset
+##    &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       
+##  1     1        63.1 Female        16 APOE4_carrier .           
+##  2     2        65.6 Female        20 APOE4_carrier .           
+##  3     3        62.5 Male          16 APOE4_carrier 66.8        
+##  4     4        69.8 Female        16 non_carrier   .           
+##  5     5        66   Male          16 non_carrier   68.7        
+##  6     6        62.5 Male          16 non_carrier   .           
+##  7     7        66.5 Male          18 non_carrier   74          
+##  8     8        67.2 Female        18 non_carrier   .           
+##  9     9        66.7 Female        16 non_carrier   .           
+## 10    10        64.1 Female        18 non_carrier   .           
+## # ℹ 469 more rows</code></pre>
+<p>In total 479 participants who satisfied the standard were recruited.
+Of these participants, 93 subjects developed MLC. The average baselin
+age was 65.0286013. The portion of women who were APOE4 carrier was
+0.3.</p>
+</div>
+<div id="import-and-clean-longitudinal-dataset" class="section level2">
+<h2>Import and clean longitudinal dataset</h2>
+<pre class="r"><code>longit &lt;- read_csv(&quot;./data/mci_amyloid.csv&quot;,skip = 1) |&gt;
+  janitor::clean_names() |&gt; 
+  rename(id = study_id) #rename the key varaible for latter merging</code></pre>
+<pre><code>## Rows: 487 Columns: 6
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): Baseline, Time 2, Time 4, Time 6, Time 8
+## dbl (1): Study ID
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>na_row &lt;- sum(!complete.cases(longit))</code></pre>
+<p>The longitudinal dataset is a 6 columns and 487 rows dataset. It
+covered 5 time points started from baseline with an interval of 2 time
+units. There are 140 subjects with na in its longitudinal
+observations.</p>
+</div>
+<div id="join-two-datasets" class="section level2">
+<h2>Join two datasets</h2>
+<p>First check the only participants in each group</p>
+<p>The unique id in baseline dataset are displayed below:</p>
+<pre><code>## [1]  14  49  92 179 268 304 389 412</code></pre>
+<p>The unique id in longitudinal dataset are displayed below:</p>
+<pre><code>##  [1]  72 234 283 380 484 485 486 487 488 489 490 491 492 493 494 495</code></pre>
+</div>
+<div id="merge-two-dataset-using-inner_join-by-the-same-id" class="section level2">
+<h2>Merge two dataset using inner_join() by the same ID</h2>
+<pre><code>## # A tibble: 471 × 11
+##       id current_age sex    education apoe4  age_at_onset baseline time_2 time_4
+##    &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; 
+##  1     1        63.1 Female        16 APOE4… .            0.11054… &lt;NA&gt;   0.109…
+##  2     2        65.6 Female        20 APOE4… .            0.10748… 0.109… 0.109…
+##  3     3        62.5 Male          16 APOE4… 66.8         0.10608… 0.108… 0.106…
+##  4     4        69.8 Female        16 non_c… .            0.10925… 0.108… 0.110…
+##  5     5        66   Male          16 non_c… 68.7         0.10795… 0.112… 0.115…
+##  6     6        62.5 Male          16 non_c… .            0.11242… 0.112… 0.111…
+##  7     7        66.5 Male          18 non_c… 74           0.11224… &lt;NA&gt;   0.104…
+##  8     8        67.2 Female        18 non_c… .            0.10956… 0.109… &lt;NA&gt;  
+##  9     9        66.7 Female        16 non_c… .            0.11210… 0.109… 0.108…
+## 10    10        64.1 Female        18 non_c… .            0.11160… 0.111… &lt;NA&gt;  
+## # ℹ 461 more rows
+## # ℹ 2 more variables: time_6 &lt;chr&gt;, time_8 &lt;chr&gt;</code></pre>
+<p>The merged dataset had 471 observations. With 205 females and 266
+males in the dataset. The portion of participants who developed MLC in
+this dataset is 0.1910828.</p>
+</div>
+<div id="export-ad_merge-to-data-folder" class="section level2">
+<h2>Export AD_merge to data folder</h2>
+<pre class="r"><code>write_csv(AD_merge,file = &quot;./data/AD_merge.csv&quot;)</code></pre>
+</div>
 </div>
 
 

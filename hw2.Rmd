@@ -10,6 +10,7 @@ library(readxl)
 ```
 
 # Problem 1
+## Import and clean pol_month data
 ```{r pol_month, include=FALSE}
 # import and clean pol_month
 pol_month_clean <- read_csv("./data/pols-month.csv") |> 
@@ -36,6 +37,7 @@ pol_month_clean
 
 **pol_month** data described the party composition of government agencies ranging from `r pol_month_clean$year[1]` to `r pol_month_clean$year[length(pol_month_clean$year)]`. The prefix *gov*,*sen*,*rep* meant separately the number of governors, the number of senators,the number of representatives. And the suffix *gop* and *dem* referred to the two parties of USA.
 
+## Import and clean snp data
 ```{r snp, include=FALSE}
 # import and clean snp
 snp_clean <- read_csv("./data/snp.csv") |> 
@@ -63,8 +65,9 @@ snp_clean <- read_csv("./data/snp.csv") |>
 ```{r,echo=FALSE}
 snp_clean
 ```
-**snp** data reflected the stock performance . The *close* variable referred to the closing values of the S&P stock index on the associated date ranging from `r snp_clean$year[1]` to `r snp_clean$year[length(pol_month_clean$year)]`
+**snp** data reflected the stock performance . The *close* variable referred to the closing values of the S&P stock index on the associated date ranging from `r snp_clean$year[1]` to `r snp_clean$year[length(snp_clean$year)]`
 
+## Import and clean unemployment data
 ```{r unemployment,include=FALSE}
 # import and clean unemployment 
 unemployment_clean <- read_csv("./data/unemployment.csv") |> 
@@ -86,21 +89,21 @@ unemployment_clean <- read_csv("./data/unemployment.csv") |>
 ```{r,echo=FALSE}
 unemployment_clean
 ```
-**unemployment** data described the unemployment rate over time.
+**unemployment** data described the unemployment rate over time randing from `r unemployment_clean$year[1]` to `r unemployment_clean$year[length(unemployment_clean$year)]`.
 
-```{r merge,echo=FALSE}
+```{r gov_merge,echo=FALSE}
 #merge data   
 data_merge <- merge(pol_month_clean,snp_clean,all = TRUE)
 data_merge <- merge(data_merge,unemployment_clean,all = TRUE)
 data_merge <- tibble(data_merge)
-data_merge
+print(data_merge)
 ```
 
  The final data is a `r ncol(data_merge)` columns and `r nrow(data_merge)` rows dataset. This data showed government composition in association with stock performance and unemployment situation ranging from `r data_merge$year[1]` to `r data_merge$year[length(data_merge$year)]`.
 
 
 # Problem 2 
-import and clean Mr.Trash Wheel data
+## Import and clean Mr.Trash Wheel data
 ```{r trash wheel,echo=FALSE}
 trash <- read_excel("./data/202207 Trash Wheel Collection Data.xlsx",
                     sheet = 1,
@@ -114,8 +117,8 @@ trash <- read_excel("./data/202207 Trash Wheel Collection Data.xlsx",
 print(trash)
 ```
  
-import and clean Professor and Gwynnda data
-```{r professor&gwynnda,include=FALSE}
+## Import and clean Professor data
+```{r professor,echo=FALSE}
 professor <- read_excel("./data/202207 Trash Wheel Collection Data.xlsx",
                     sheet = 2,
                     range = cell_cols("A:M")) |> 
@@ -124,7 +127,11 @@ professor <- read_excel("./data/202207 Trash Wheel Collection Data.xlsx",
   mutate(
     homes_powered = weight_tons*500/30
   )
+print(professor)
+```
 
+## Import and clean Gwynnda data
+```{r gwynnda,echo=FALSE}
 gwynnda <- read_excel("./data/202207 Trash Wheel Collection Data.xlsx",
                     sheet = 4,
                     range = cell_cols("A:K")) |> 
@@ -133,9 +140,11 @@ gwynnda <- read_excel("./data/202207 Trash Wheel Collection Data.xlsx",
   mutate(
     homes_powered = weight_tons*500/30
   )
+print(gwynnda)
 ```
 
-Add tag to each dataset
+## Add tag to each dataset
+Add "Mr.trash","professor","gwynnda" to each dataset. 
 
 ```{r tag, include=FALSE}
 trash_comb <- trash |> 
@@ -157,13 +166,76 @@ gwynnda_comb <- gwynnda |>
   select(tag,everything())
 ```
 
-```{r}
+## Combine three datasets and form the trash_final dataset
+
+```{r final,echo=FALSE}
 trash_comb <- mutate(trash_comb,year = as.numeric(year))
 trash_final <- bind_rows(trash_comb,professor_comb,gwynnda_comb)
-
+print(trash_final)
 ```
-The final combined data is a `r ncol(trash_final)` and `r nrow(trash_final)`, the *weight_tons* variable refers to the total weight the trash wheel carried each day with the unit ton. *home_powered* estimate the number of houses which can be supplied by energy generated from trash wheel.
+The final combined data is a `r ncol(trash_final)` and `r nrow(trash_final)` dataset, the *weight_tons* variable refers to the total weight the trash wheel carried each day with the unit ton. *home_powered* estimate the number of houses which can be supplied by energy generated from trash wheel.
 
 As for the available data, the total weight of trash collected by Professor Trash Wheel was `r sum(trash_final[trash_final$tag=="professor",]$weight_tons)` tons; the total cigarette butts collected by Gwynnda in July of 2021 was `r sum(filter(gwynnda,month=="July",year==2021)$cigarette_butts)`. 
 
-#problem 3
+# Problem 3
+
+## Import and clean baseline data
+```{r, echo=FALSE}
+baseline <- read_csv("./data/MCI_baseline.csv",skip = 1) |> 
+  janitor::clean_names() |> 
+  mutate(
+    sex = ifelse(sex==1,"Male","Female"),
+    apoe4 = ifelse(apoe4==1, "APOE4_carrier","non_carrier") #convert sex and apor4 variables to chr
+  ) |> 
+  filter(
+    current_age < age_at_onset | age_at_onset=="."
+  ) #delete subjects whose onset time was prior to baseline
+
+baseline_fem <- baseline[baseline$sex=="Female",]
+
+print(baseline)
+```
+
+In total `r nrow(baseline)` participants who satisfied the standard were recruited. Of these participants, `r nrow(baseline[baseline$age_at_onset>0,])` subjects developed MLC. The average baselin age was `r mean(baseline$current_age)`. The portion of women who were APOE4 carrier was `r nrow(baseline_fem[baseline_fem$apoe4=="APOE4_carrier",])/nrow(baseline_fem)`.
+
+## Import and clean longitudinal dataset
+```{r}
+longit <- read_csv("./data/mci_amyloid.csv",skip = 1) |>
+  janitor::clean_names() |> 
+  rename(id = study_id) #rename the key varaible for latter merging
+
+na_row <- sum(!complete.cases(longit))
+```
+The longitudinal dataset is a `r ncol(longit)` columns and `r nrow(longit)` rows dataset. It covered 5 time points started from baseline with an interval of 2 time units. There are `r na_row` subjects with na in its longitudinal observations. 
+
+## Join two datasets
+First check the only participants in each group
+```{r unique,echo=FALSE}
+baseline_uni <- setdiff(baseline$id,longit$id)
+longit_uni <- setdiff(longit$id,baseline$id)
+```
+
+The unique id in baseline dataset are displayed below:
+```{r baselin_unique,echo=FALSE}
+baseline_uni
+```
+
+The unique id in longitudinal dataset are displayed below:
+```{r longit_unique, echo=FALSE}
+longit_uni
+```
+
+## Merge two dataset using inner_join() by the same ID
+```{r ad_merge,echo=FALSE}
+AD_merge <- inner_join(baseline,longit,by = "id")
+
+print(AD_merge)
+```
+
+The merged dataset had `r nrow(AD_merge)` observations. With `r nrow(AD_merge[AD_merge$sex=="Female",])` females and  `r nrow(AD_merge[AD_merge$sex=="Male",])` males in the dataset. The portion of participants who developed MLC in this dataset is `r nrow(AD_merge[AD_merge$age_at_onset>0,])/nrow(AD_merge)`.
+
+## Export AD_merge to data folder
+```{r export}
+write_csv(AD_merge,file = "./data/AD_merge.csv")
+```
+
