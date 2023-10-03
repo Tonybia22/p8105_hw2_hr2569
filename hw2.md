@@ -93,7 +93,7 @@ unemployment situation ranging from 1947 to 2015.
 
 ## Import and clean Mr.Trash Wheel data
 
-    ## # A tibble: 547 × 14
+    ## # A tibble: 584 × 14
     ##    dumpster month year  date                weight_tons volume_cubic_yards
     ##       <dbl> <chr> <chr> <dttm>                    <dbl>              <dbl>
     ##  1        1 May   2014  2014-05-16 00:00:00        4.31                 18
@@ -106,10 +106,10 @@ unemployment situation ranging from 1947 to 2015.
     ##  8        8 May   2014  2014-05-28 00:00:00        3.7                  16
     ##  9        9 June  2014  2014-06-05 00:00:00        2.52                 14
     ## 10       10 June  2014  2014-06-11 00:00:00        3.76                 18
-    ## # ℹ 537 more rows
+    ## # ℹ 574 more rows
     ## # ℹ 8 more variables: plastic_bottles <dbl>, polystyrene <dbl>,
-    ## #   cigarette_butts <dbl>, glass_bottles <dbl>, grocery_bags <dbl>,
-    ## #   chip_bags <dbl>, sports_balls <dbl>, homes_powered <dbl>
+    ## #   cigarette_butts <dbl>, glass_bottles <dbl>, plastic_bags <dbl>,
+    ## #   wrappers <dbl>, sports_balls <dbl>, homes_powered <dbl>
 
 ## Import and clean Professor data
 
@@ -156,7 +156,7 @@ Add “Mr.trash”,“professor”,“gwynnda” to each dataset.
 
 ## Combine three datasets and form the trash_final dataset
 
-    ## # A tibble: 747 × 16
+    ## # A tibble: 784 × 17
     ##    tag   dumpster month  year date                weight_tons volume_cubic_yards
     ##    <chr>    <dbl> <chr> <dbl> <dttm>                    <dbl>              <dbl>
     ##  1 Mr.t…        1 May    2014 2014-05-16 00:00:00        4.31                 18
@@ -169,13 +169,13 @@ Add “Mr.trash”,“professor”,“gwynnda” to each dataset.
     ##  8 Mr.t…        8 May    2014 2014-05-28 00:00:00        3.7                  16
     ##  9 Mr.t…        9 June   2014 2014-06-05 00:00:00        2.52                 14
     ## 10 Mr.t…       10 June   2014 2014-06-11 00:00:00        3.76                 18
-    ## # ℹ 737 more rows
-    ## # ℹ 9 more variables: plastic_bottles <dbl>, polystyrene <dbl>,
-    ## #   cigarette_butts <dbl>, glass_bottles <dbl>, grocery_bags <dbl>,
-    ## #   chip_bags <dbl>, sports_balls <dbl>, homes_powered <dbl>,
-    ## #   plastic_bags <dbl>
+    ## # ℹ 774 more rows
+    ## # ℹ 10 more variables: plastic_bottles <dbl>, polystyrene <dbl>,
+    ## #   cigarette_butts <dbl>, glass_bottles <dbl>, plastic_bags <dbl>,
+    ## #   wrappers <dbl>, sports_balls <dbl>, homes_powered <dbl>,
+    ## #   grocery_bags <dbl>, chip_bags <dbl>
 
-The final combined data is a 16 and 747 dataset, the *weight_tons*
+The final combined data is a 17 and 784 dataset, the *weight_tons*
 variable refers to the total weight the trash wheel carried each day
 with the unit ton. *home_powered* estimate the number of houses which
 can be supplied by energy generated from trash wheel.
