@@ -203,7 +203,14 @@ In total `r nrow(baseline)` participants who satisfied the standard were recruit
 ```{r}
 longit <- read_csv("./data/mci_amyloid.csv",skip = 1) |>
   janitor::clean_names() |> 
-  rename(id = study_id) #rename the key varaible for latter merging
+  rename(id = study_id) |> #rename the key varaible for latter merging
+  pivot_longer(
+    time_2:time_8,
+    names_to = "time_points",
+    values_to = "biomaker_values"
+  )
+ 
+
 
 na_row <- sum(!complete.cases(longit))
 ```
@@ -233,7 +240,7 @@ AD_merge <- inner_join(baseline,longit,by = "id")
 print(AD_merge)
 ```
 
-The merged dataset had `r nrow(AD_merge)` observations. With `r AD_merge |> filter(sex=="Female") |> nrow()` females and  `r AD_merge |> filter(sex=="Male") |> nrow()` males in the dataset. The portion of participants who developed MLC in this dataset is `r AD_merge |>  filter(age_at_onset>0) |> nrow()/nrow(AD_merge)`.
+The merged dataset had `r nrow(AD_merge)` observations and `r nrow(AD_merge)/4` subjects. With `r AD_merge |> filter(sex=="Female") |> nrow()/4` females and  `r AD_merge |> filter(sex=="Male") |> nrow()/4` males in the dataset. The portion of participants who developed MLC in this dataset is `r AD_merge |>  filter(age_at_onset>0) |> nrow()/nrow(AD_merge)`.
 
 ## Export AD_merge to data folder
 ```{r export}

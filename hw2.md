@@ -221,7 +221,12 @@ was 65.0286013. The portion of women who were APOE4 carrier was 0.3.
 ``` r
 longit <- read_csv("./data/mci_amyloid.csv",skip = 1) |>
   janitor::clean_names() |> 
-  rename(id = study_id) #rename the key varaible for latter merging
+  rename(id = study_id) |> #rename the key varaible for latter merging
+  pivot_longer(
+    time_2:time_8,
+    names_to = "time_points",
+    values_to = "biomaker_values"
+  )
 ```
 
     ## Rows: 487 Columns: 6
@@ -237,9 +242,9 @@ longit <- read_csv("./data/mci_amyloid.csv",skip = 1) |>
 na_row <- sum(!complete.cases(longit))
 ```
 
-The longitudinal dataset is a 6 columns and 487 rows dataset. It covered
-5 time points started from baseline with an interval of 2 time units.
-There are 140 subjects with na in its longitudinal observations.
+The longitudinal dataset is a 4 columns and 1948 rows dataset. It
+covered 5 time points started from baseline with an interval of 2 time
+units. There are 166 subjects with na in its longitudinal observations.
 
 ## Join two datasets
 
@@ -255,25 +260,25 @@ The unique id in longitudinal dataset are displayed below:
 
 ## Merge two dataset using inner_join() by the same ID
 
-    ## # A tibble: 471 × 11
-    ##       id current_age sex    education apoe4  age_at_onset baseline time_2 time_4
-    ##    <dbl>       <dbl> <chr>      <dbl> <chr>  <chr>        <chr>    <chr>  <chr> 
-    ##  1     1        63.1 Female        16 APOE4… .            0.11054… <NA>   0.109…
-    ##  2     2        65.6 Female        20 APOE4… .            0.10748… 0.109… 0.109…
-    ##  3     3        62.5 Male          16 APOE4… 66.8         0.10608… 0.108… 0.106…
-    ##  4     4        69.8 Female        16 non_c… .            0.10925… 0.108… 0.110…
-    ##  5     5        66   Male          16 non_c… 68.7         0.10795… 0.112… 0.115…
-    ##  6     6        62.5 Male          16 non_c… .            0.11242… 0.112… 0.111…
-    ##  7     7        66.5 Male          18 non_c… 74           0.11224… <NA>   0.104…
-    ##  8     8        67.2 Female        18 non_c… .            0.10956… 0.109… <NA>  
-    ##  9     9        66.7 Female        16 non_c… .            0.11210… 0.109… 0.108…
-    ## 10    10        64.1 Female        18 non_c… .            0.11160… 0.111… <NA>  
-    ## # ℹ 461 more rows
-    ## # ℹ 2 more variables: time_6 <chr>, time_8 <chr>
+    ## # A tibble: 1,884 × 9
+    ##       id current_age sex    education apoe4    age_at_onset baseline time_points
+    ##    <dbl>       <dbl> <chr>      <dbl> <chr>    <chr>        <chr>    <chr>      
+    ##  1     1        63.1 Female        16 APOE4_c… .            0.11054… time_2     
+    ##  2     1        63.1 Female        16 APOE4_c… .            0.11054… time_4     
+    ##  3     1        63.1 Female        16 APOE4_c… .            0.11054… time_6     
+    ##  4     1        63.1 Female        16 APOE4_c… .            0.11054… time_8     
+    ##  5     2        65.6 Female        20 APOE4_c… .            0.10748… time_2     
+    ##  6     2        65.6 Female        20 APOE4_c… .            0.10748… time_4     
+    ##  7     2        65.6 Female        20 APOE4_c… .            0.10748… time_6     
+    ##  8     2        65.6 Female        20 APOE4_c… .            0.10748… time_8     
+    ##  9     3        62.5 Male          16 APOE4_c… 66.8         0.10608… time_2     
+    ## 10     3        62.5 Male          16 APOE4_c… 66.8         0.10608… time_4     
+    ## # ℹ 1,874 more rows
+    ## # ℹ 1 more variable: biomaker_values <chr>
 
-The merged dataset had 471 observations. With 205 females and 266 males
-in the dataset. The portion of participants who developed MLC in this
-dataset is 0.1910828.
+The merged dataset had 1884 observations and 471 subjects. With 205
+females and 266 males in the dataset. The portion of participants who
+developed MLC in this dataset is 0.1910828.
 
 ## Export AD_merge to data folder
 
